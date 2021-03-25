@@ -1,0 +1,22 @@
+[
+    {
+        "name": "backend_aws",
+        "type": "aws-s3",
+        "region": "ap-south-1",
+        "endpoint": "s3.ap-south-1.amazonaws.com",
+        "security": "<Enter_Valid_Secret_Key>",
+        "access": "<Enter_Valid_Access_Key>",
+        "bucketName": "isabelatestawsbucket",
+        "folderName":"sample_aws_folder"
+    },
+    {
+        "name": "backend_azure",
+        "type": "azure-blob",
+        "region": "East Asia",
+        "endpoint": "https://sodastorage.blob.core.windows.net/sodatest",
+        "security": "<Enter_Valid_Secret_Key>",
+        "access": "<Enter_Valid_Access_Key>",
+        "bucketName": "isabelatestazurebucket",
+        "folderName":"sample_azure_folder"
+      }
+]

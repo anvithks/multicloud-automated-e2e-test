@@ -108,6 +108,26 @@ OR
 node app.js
 ```
 
+## Import and Edit Requests and Tests
+---  
+You can import the Postman collection and the global variables JSON file in Postman.  
+The collection uses global variables, iteration data and the pre-request scripts and post request tests to enable the user to run tests with different inputs and input data.  
+Tests can be edited and added using the Postman desktop application.
+
+After editing the requests and/or scripts and the variables they can be exported using Postman.
+
+### For more information:  
+|Task|Link|Examples|
+|----|----|--------|
+|Writing Scripts in Postman|[Link](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/)||
+|Writing Pre-request Scripts|[Link](https://learning.postman.com/docs/writing-scripts/pre-request-scripts/)||
+|Writing test sripts in Postman|[Link](https://learning.postman.com/docs/writing-scripts/test-scripts/)|[Examples](https://learning.postman.com/docs/writing-scripts/script-references/test-examples/)||
+|Dynamic Variables | [Link](https://learning.postman.com/docs/writing-scripts/script-references/variables-list/)||
+|Postman JavaScript Reference|[Link](https://learning.postman.com/docs/writing-scripts/script-references/postman-sandbox-api-reference/)||
+|Using Variables|[Link](https://learning.postman.com/docs/sending-requests/variables/)||  
+
+
+<br />
 
 ## View Reports
 ---  
@@ -118,3 +138,7 @@ We have enabled the `newman-reporter-htmlextra`, A Newman HTML reporter that has
 This reporter comes with a dashboard style summary landing page and a set of different tabs which contain the detailed request information. There are also a few optional configuration flags available, to tailor the final report in a number of different ways.
 
 The reports are generated in the `/reports` folder.
+
+
+
+

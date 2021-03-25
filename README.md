@@ -3,10 +3,12 @@ Automated E2E tests for SODA Multicloud Project using Postman collection of the 
 The [newman-reporter-htmlextra](https://www.npmjs.com/package/newman-reporter-htmlextra) is a HTML reporter that has been extended to include the separation of the iteration runs.  
 This reporter comes with a dashboard style summary landing page and a set of different tabs which contain the detailed request information. There are also a few optional configuration flags available, to tailor the final report in a number of different ways.
 
+
 ## Pre-requisites
 ---  
 To run Newman, ensure that you have Node.js >= v10. [Install Node.js via package manager](https://nodejs.org/en/download/package-manager/).  
 You can install different versions of NodeJS and maintain different versions using `nvm - Node Version Manager`. Instructions on how to install `nvm` can be found [here](https://github.com/nvm-sh/nvm)  
+
 
 ## Installation
 --- 
@@ -14,9 +16,10 @@ You can install different versions of NodeJS and maintain different versions usi
 
     `git clone https://github.com/anvithks/multicloud-automated-e2e-test.git`  
 
-2. Install `newman` and the `newman-reporter-htmlextra`  
+2. To Install `newman` and the reporter `newman-reporter-htmlextra`  run the following:
 
     `npm install`
+
 
 
 ## Configuration
@@ -86,6 +89,7 @@ This file contains an array of objects, each of which holds a set of inputs that
 ```
 **Note:** ***Please replace the values for `security` and `access` keys with the actual Secret Key and Access key provided by the Cloud backend.***
 
+
 ## Usage
 ---  
 To run the collection :
@@ -100,3 +104,13 @@ OR
 node app.js
 ```
 
+
+## View Reports
+---  
+CLI reporter is enabled by default when Newman is used as a CLI, you do not need to specifically provide the same as part of reporters option. However, enabling one or more of the other reporters will result in no CLI output.  
+
+We have enabled the `newman-reporter-htmlextra`, A Newman HTML reporter that has been extended to include the separation of the iteration runs so these are no longer aggregated together and also some additional handlebars helpers to enable users to create better custom templates.
+
+This reporter comes with a dashboard style summary landing page and a set of different tabs which contain the detailed request information. There are also a few optional configuration flags available, to tailor the final report in a number of different ways.
+
+The reports are generated in the `/reports` folder.

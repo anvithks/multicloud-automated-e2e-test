@@ -4,14 +4,14 @@ var newman = require('newman');
 // call newman.run to pass `options` object and wait for callback
 newman.run({
     collection: require('./SODA_Multicloud_Automation_Test.postman_collection.json'),
-    globals: require('./SODA.postman_globals_archive.json'),
+    globals: require('./SODA.postman_globals.json'),
     //exportGlobals: ('./soda_global_vars.json'),
     iterationData: ('./iteration_data.json'),
     reporters: ['htmlextra','cli'],
     //bail: true,
     reporter: {
         htmlextra: {
-            // export: './report/report.html',
+            export: './reports/soda_multicloud_e2e_report.html',
             // template: './template.hbs'
             logs: true,
             // showOnlyFails: true,

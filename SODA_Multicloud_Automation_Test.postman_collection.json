@@ -2467,7 +2467,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 204. Archvied Object is deleted successfully.\", function () { pm.response.to.have.status(204);});",
+							"pm.test(\"Status code is 204. Archived Object is deleted successfully.\", function () { pm.response.to.have.status(204);});",
 							"pm.globals.unset('iterationRequestBody');"
 						],
 						"type": "text/javascript"

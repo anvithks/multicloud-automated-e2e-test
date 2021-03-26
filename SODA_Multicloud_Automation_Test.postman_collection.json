@@ -6,21 +6,17 @@
 	},
 	"item": [
 		{
-			"name": "Login - Get Token",
+			"name": "Login - Invalid Credentials",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
-							"pm.test(\"Token is generated\", function () { pm.expect(pm.response.json().token).to.exist; });",
-							"let respHeaders = pm.response.headers.all();",
-							"respHeaders.forEach((element)=>{",
-							"    if(element.key == 'X-Subject-Token'){",
-							"        pm.environment.set(\"x-auth-token\", element.value);        ",
-							"        pm.globals.set(\"authToken\", element.value);",
-							"    }",
-							"});"
+							"pm.test(\"Unauthorized Access. Status code is 401\", function () { pm.response.to.have.status(401); });",
+							"",
+							"",
+							"",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -31,7 +27,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"auth\": {\n    \"identity\": {\n      \"methods\": [\n        \"password\"\n      ],\n      \"password\": {\n        \"user\": {\n          \"name\": \"admin\",\n          \"domain\": {\n            \"name\": \"Default\"\n          },\n          \"password\": \"opensds@123\"\n        }\n      }\n    }\n  }\n}",
+					"raw": "{\n  \"auth\": {\n    \"identity\": {\n      \"methods\": [\n        \"password\"\n      ],\n      \"password\": {\n        \"user\": {\n          \"name\": \"user\",\n          \"domain\": {\n            \"name\": \"Default\"\n          },\n          \"password\": \"opensds@123\"\n        }\n      }\n    }\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -124,17 +120,21 @@
 			]
 		},
 		{
-			"name": "Login - Invalid Credentials",
+			"name": "Login - Get Token",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Unauthorized Access. Status code is 401\", function () { pm.response.to.have.status(401); });",
-							"",
-							"",
-							"",
-							""
+							"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });",
+							"pm.test(\"Token is generated\", function () { pm.expect(pm.response.json().token).to.exist; });",
+							"let respHeaders = pm.response.headers.all();",
+							"respHeaders.forEach((element)=>{",
+							"    if(element.key == 'X-Subject-Token'){",
+							"        pm.environment.set(\"x-auth-token\", element.value);        ",
+							"        pm.globals.set(\"authToken\", element.value);",
+							"    }",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -145,7 +145,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"auth\": {\n    \"identity\": {\n      \"methods\": [\n        \"password\"\n      ],\n      \"password\": {\n        \"user\": {\n          \"name\": \"user\",\n          \"domain\": {\n            \"name\": \"Default\"\n          },\n          \"password\": \"opensds@123\"\n        }\n      }\n    }\n  }\n}",
+					"raw": "{\n  \"auth\": {\n    \"identity\": {\n      \"methods\": [\n        \"password\"\n      ],\n      \"password\": {\n        \"user\": {\n          \"name\": \"admin\",\n          \"domain\": {\n            \"name\": \"Default\"\n          },\n          \"password\": \"opensds@123\"\n        }\n      }\n    }\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -479,19 +479,20 @@
 			]
 		},
 		{
-			"name": "Register Backend",
+			"name": "Register Backend Invalid Credentials",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+							"pm.test(\"backend registration with Invalid credentials failed. Status code is 400\", function () { pm.response.to.have.status(400); });",
+							"if(pm.response.code==200){",
+							"    console.log(\"Backend is created\", JSON.parse(responseBody).id);",
+							"    pm.globals.set('invalid_backend_id', JSON.parse(responseBody).id)",
+							"    postman.setNextRequest(\"Delete Backend\");",
+							"}",
 							"",
-							"pm.test(\"Backend Registered\", function () { pm.expect(pm.response.json().id).to.exist; });",
 							"",
-							"let resp = pm.response.json();",
-							"pm.globals.set(\"backend_id\", resp.id);",
-							"pm.globals.set(\"backend_name\", resp.name);",
 							""
 						],
 						"type": "text/javascript"
@@ -509,7 +510,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"name\": \"{{name}}\",\n  \"type\": \"{{type}}\",\n  \"region\": \"{{region}}\",\n  \"endpoint\": \"{{endpoint}}\",\n  \"security\": \"{{security}}\",\n  \"access\": \"{{access}}\"\n}",
+					"raw": "{\n  \"name\": \"{{name}}\",\n  \"type\": \"{{type}}\",\n  \"region\": \"{{region}}\",\n  \"endpoint\": \"endpoint\",\n  \"security\": \"security\",\n  \"access\": \"access\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -579,16 +580,57 @@
 			]
 		},
 		{
-			"name": "Register Backend Invalid Credentials",
+			"name": "Register Backend",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"backend registration with Invalid credentials failed. Status code is 400\", function () { pm.response.to.have.status(400); });",
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
 							"",
+							"pm.test(\"Backend Registered\", function () { pm.expect(pm.response.json().id).to.exist; });",
 							"",
+							"let resp = pm.response.json();",
+							"pm.globals.set(\"backend_id\", resp.id);",
+							"pm.globals.set(\"backend_name\", resp.name);",
 							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let name = pm.iterationData.get(\"name\");",
+							"let type = pm.iterationData.get(\"type\");",
+							"let region = pm.iterationData.get(\"region\");",
+							"let endpoint = pm.iterationData.get(\"endpoint\");",
+							"let security = pm.iterationData.get(\"security\");",
+							"let access = pm.iterationData.get(\"access\");",
+							"let cloudBucket = pm.iterationData.get(\"cloudBucket\");",
+							"if(pm.iterationData.get(\"type\")!='alibaba-oss'){",
+							"    let data = {",
+							"        \"name\": name,",
+							"        \"type\": type,",
+							"        \"region\": region,",
+							"        \"endpoint\": endpoint,",
+							"        \"security\": security,",
+							"        \"access\": access",
+							"    };",
+							"    pm.globals.set('registerBackendBody', JSON.stringify(data));",
+							"} else if(pm.iterationData.get(\"type\")=='alibaba-oss'){",
+							"    let data = {",
+							"        \"name\": name,",
+							"        \"type\": type,",
+							"        \"bucket\" : cloudBucket,",
+							"        \"region\": region,",
+							"        \"endpoint\": endpoint,",
+							"        \"security\": security,",
+							"        \"access\": access",
+							"    };",
+							"    pm.globals.set('registerBackendBody', JSON.stringify(data));",
+							"}"
 						],
 						"type": "text/javascript"
 					}
@@ -605,7 +647,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"name\": \"{{name}}\",\n  \"type\": \"{{type}}\",\n  \"region\": \"{{region}}\",\n  \"endpoint\": \"{{endpoint}}\",\n  \"security\": \"{{security}}\",\n  \"access\": \"access\"\n}",
+					"raw": "{{registerBackendBody}}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -2047,14 +2089,9 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 200. Archive object success.\", function () {",
-							"    let reqHeaders = pm.request.headers.all();",
-							"    reqHeaders.forEach((element)=>{",
-							"        if(element.key == 'X-Amz-Storage-Class' && element.value=='GLACIER'){",
-							"            pm.response.to.have.status(200);        ",
-							"        }",
-							"    });",
-							"    ",
-							"});"
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -2065,8 +2102,10 @@
 						"exec": [
 							"if(pm.iterationData.get(\"type\")=='aws-s3'){",
 							"   pm.globals.set('archiveClass', 'GLACIER');",
-							"} else if(pm.iterationData.get(\"type\")=='azure-blob'){",
+							"} else if(pm.iterationData.get(\"type\")=='azure-blob' || pm.iterationData.get(\"type\")=='gcp-s3'){",
 							"    pm.globals.set('archiveClass', 'Archive');",
+							"} else{",
+							"    postman.setNextRequest(\"Delete Archived Object\")",
 							"}",
 							""
 						],
@@ -2202,6 +2241,12 @@
 							"let bucket = resp.ListBucketResult;",
 							"pm.test(\"Bucket details fetched\", function () { pm.expect(bucket).to.exist && pm.expect(bucket.Name).to.exist; });",
 							"pm.test(\"Bucket Contents Exist\", function () { pm.expect(bucket.Contents).to.exist && pm.expect(bucket.Contents).length > 0; });",
+							"if (pm.iterationData.get('type')!='gcp-s3'){",
+							"    postman.setNextRequest('RESTORE Object')",
+							"}else{",
+							"    postman.setNextRequest('Download Object')",
+							"    postman.setNextRequest('Delete Archived Object')",
+							"}",
 							""
 						],
 						"type": "text/javascript"
@@ -2467,7 +2512,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 204. Archived Object is deleted successfully.\", function () { pm.response.to.have.status(204);});",
+							"pm.test(\"Status code is 204. Archvied Object is deleted successfully.\", function () { pm.response.to.have.status(204);});",
 							"pm.globals.unset('iterationRequestBody');"
 						],
 						"type": "text/javascript"
@@ -2616,16 +2661,30 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 200. Backend delete successfull.\", function () { ",
-							"    pm.globals.unset('backend_id');",
+							"    pm.globals.set('backend_id', '');",
 							"    pm.globals.set('backend_name', '');",
-							"    pm.globals.unset('PROJECT_ID');",
-							"    pm.globals.unset('BACKEND_AWS');",
-							"    pm.globals.unset('BACKEND_AZURE');",
-							"    pm.globals.unset('BACKEND_GCP');",
-							"    pm.globals.unset('BACKEND_HUAWEI');",
+							"    pm.globals.set('BACKEND_AWS', '');",
+							"    pm.globals.set('BACKEND_AZURE', '');",
+							"    pm.globals.set('BACKEND_GCP', '');",
+							"    pm.globals.set('BACKEND_HUAWEI', '');",
 							"    pm.response.to.have.status(200);",
 							"});",
-							""
+							"if(pm.globals.get('invalid_backend_id')){",
+							"    pm.globals.set('invalid_backend_id', '');",
+							"    postman.setNextRequest('Register Backend');",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let invalidBack = pm.globals.get('invalid_backend_id');",
+							"if(invalidBack){",
+							"    pm.globals.set('backend_id', invalidBack);",
+							"}"
 						],
 						"type": "text/javascript"
 					}

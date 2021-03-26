@@ -8,7 +8,7 @@
 		},
 		{
 			"key": "HOST_IP",
-			"value": "192.168.56.123",
+			"value": "192.168.56.119",
 			"enabled": true
 		},
 		{
@@ -57,42 +57,7 @@
 			"enabled": true
 		},
 		{
-			"key": "PROJECT_ID",
-			"value": "",
-			"enabled": true
-		},
-		{
-			"key": "BACKEND_AWS",
-			"value": "",
-			"enabled": true
-		},
-		{
-			"key": "BACKEND_AZURE",
-			"value": "",
-			"enabled": true
-		},
-		{
-			"key": "BACKEND_GCP",
-			"value": "",
-			"enabled": true
-		},
-		{
-			"key": "BACKEND_HUAWEI",
-			"value": "",
-			"enabled": true
-		},
-		{
 			"key": "backend_name",
-			"value": "",
-			"enabled": true
-		},
-		{
-			"key": "backend_id",
-			"value": "",
-			"enabled": true
-		},
-		{
-			"key": "bucket_name",
 			"value": "",
 			"enabled": true
 		},
@@ -107,11 +72,6 @@
 			"enabled": true
 		},
 		{
-			"key": "iterationRequestBody",
-			"value": "",
-			"enabled": true
-		},
-		{
 			"key": "iterationBucketName",
 			"value": "",
 			"enabled": true
@@ -120,10 +80,15 @@
 			"key": "iterationFolderName",
 			"value": "",
 			"enabled": true
+		},
+		{
+			"key": "registerBackendBody",
+			"value": "",
+			"enabled": true
 		}
 	],
 	"name": "Anvith SODA Workspace Globals",
 	"_postman_variable_scope": "globals",
-	"_postman_exported_at": "2021-03-25T12:40:24.620Z",
+	"_postman_exported_at": "2021-03-26T04:14:21.454Z",
 	"_postman_exported_using": "Postman/7.36.5"
 }

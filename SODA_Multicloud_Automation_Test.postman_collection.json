@@ -16,6 +16,7 @@
 							"",
 							"",
 							"",
+							"",
 							""
 						],
 						"type": "text/javascript"
@@ -384,9 +385,9 @@
 							"pm.test(\"Project ID is generated\", function () { pm.expect(pm.response.json().credentials[0].project_id).to.exist; });",
 							"",
 							"let resp = pm.response.json();",
-							"pm.globals.set(\"AK\", JSON.parse(resp.credentials[0].blob).access);",
-							"pm.globals.set(\"SK\", JSON.parse(resp.credentials[0].blob).secret);",
-							"pm.globals.set(\"PROJECT_ID\", resp.credentials[0].project_id);",
+							"pm.environment.set(\"AK\", JSON.parse(resp.credentials[0].blob).access);",
+							"pm.environment.set(\"SK\", JSON.parse(resp.credentials[0].blob).secret);",
+							"pm.environment.set(\"PROJECT_ID\", resp.credentials[0].project_id);",
 							""
 						],
 						"type": "text/javascript"
@@ -488,7 +489,7 @@
 							"pm.test(\"backend registration with Invalid credentials failed. Status code is 400\", function () { pm.response.to.have.status(400); });",
 							"if(pm.response.code==200){",
 							"    console.log(\"Backend is created\", JSON.parse(responseBody).id);",
-							"    pm.globals.set('invalid_backend_id', JSON.parse(responseBody).id)",
+							"    pm.environment.set('invalid_backend_id', JSON.parse(responseBody).id)",
 							"    postman.setNextRequest(\"Delete Backend\");",
 							"}",
 							"",
@@ -591,8 +592,8 @@
 							"pm.test(\"Backend Registered\", function () { pm.expect(pm.response.json().id).to.exist; });",
 							"",
 							"let resp = pm.response.json();",
-							"pm.globals.set(\"backend_id\", resp.id);",
-							"pm.globals.set(\"backend_name\", resp.name);",
+							"pm.environment.set(\"backend_id\", resp.id);",
+							"pm.environment.set(\"backend_name\", resp.name);",
 							""
 						],
 						"type": "text/javascript"
@@ -618,7 +619,7 @@
 							"        \"security\": security,",
 							"        \"access\": access",
 							"    };",
-							"    pm.globals.set('registerBackendBody', JSON.stringify(data));",
+							"    pm.environment.set('registerBackendBody', JSON.stringify(data));",
 							"} else if(pm.iterationData.get(\"type\")=='alibaba-oss'){",
 							"    let data = {",
 							"        \"name\": name,",
@@ -629,7 +630,7 @@
 							"        \"security\": security,",
 							"        \"access\": access",
 							"    };",
-							"    pm.globals.set('registerBackendBody', JSON.stringify(data));",
+							"    pm.environment.set('registerBackendBody', JSON.stringify(data));",
 							"}"
 						],
 						"type": "text/javascript"
@@ -729,13 +730,13 @@
 							"let backends = pm.response.json().backends;",
 							"backends.forEach((item)=>{",
 							"    switch(item.name){",
-							"        case 'backend_aws' :   pm.globals.set(\"BACKEND_AWS\", item.name);",
+							"        case 'backend_aws' :   pm.environment.set(\"BACKEND_AWS\", item.name);",
 							"            break;",
-							"        case 'backend_azure' :   pm.globals.set(\"BACKEND_AZURE\", item.name);",
+							"        case 'backend_azure' :   pm.environment.set(\"BACKEND_AZURE\", item.name);",
 							"            break;",
-							"        case 'backend_gcp' :   pm.globals.set(\"BACKEND_GCP\", item.name);",
+							"        case 'backend_gcp' :   pm.environment.set(\"BACKEND_GCP\", item.name);",
 							"            break;",
-							"        case 'backend_obs' :   pm.globals.set(\"BACKEND_HUAWEI\", item.name);",
+							"        case 'backend_obs' :   pm.environment.set(\"BACKEND_HUAWEI\", item.name);",
 							"            break;",
 							"    }",
 							"});",
@@ -829,9 +830,12 @@
 							"respHeaders.forEach((element)=>{",
 							"    if(element.key == 'Location'){",
 							"        let bucketName = element.value.split('/')[1];",
-							"        pm.globals.set(\"bucket_name\", bucketName);",
+							"        pm.environment.set(\"bucket_name\", bucketName);",
 							"    }",
 							"});",
+							"if(pm.response.code==500){",
+							"    ",
+							"}",
 							""
 						],
 						"type": "text/javascript"
@@ -841,7 +845,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.globals.set('iterationBucketName', pm.iterationData.get('bucketName'));"
+							"pm.environment.set('iterationBucketName', pm.iterationData.get('bucketName'));"
 						],
 						"type": "text/javascript"
 					}
@@ -1049,7 +1053,7 @@
 				"body": {
 					"mode": "file",
 					"file": {
-						"src": "/home/root1/anvith_workspace/soda/postman/sample.pdf"
+						"src": "/home/root1/anvith_workspace/soda/test-automation/workfolder/multicloud-automated-e2e-test/sample.pdf"
 					}
 				},
 				"url": {
@@ -1507,7 +1511,7 @@
 							"pm.test(\"Status code is 200. Folder is created.\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"pm.globals.set(\"folder_name\", pm.iterationData.get('folderName'));"
+							"pm.environment.set(\"folder_name\", pm.iterationData.get('folderName'));"
 						],
 						"type": "text/javascript"
 					}
@@ -1516,7 +1520,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.globals.set('iterationFolderName', pm.iterationData.get('folderName'));"
+							"pm.environment.set('iterationFolderName', pm.iterationData.get('folderName'));"
 						],
 						"type": "text/javascript"
 					}
@@ -1661,7 +1665,7 @@
 				"body": {
 					"mode": "file",
 					"file": {
-						"src": "/home/root1/anvith_workspace/soda/postman/sample.pdf"
+						"src": "/home/root1/anvith_workspace/soda/test-automation/workfolder/multicloud-automated-e2e-test/sample.pdf"
 					}
 				},
 				"url": {
@@ -1802,7 +1806,7 @@
 							"    let resp = xml2Json(responseBody);",
 							"    let bucket = resp.ListBucketResult;",
 							"    bucket.Contents.forEach((item)=>{",
-							"        if(item.Key==pm.globals.get(\"folder_name\")){",
+							"        if(item.Key==pm.environment.get(\"folder_name\")){",
 							"            pm.response.to.have.status(200);        ",
 							"        }",
 							"    })",
@@ -1999,7 +2003,7 @@
 						"exec": [
 							"pm.test(\"Status code is 204. Folder delete successful.\", function () {",
 							"    pm.response.to.have.status(204);",
-							"    pm.globals.unset('folder_name');",
+							"    pm.environment.set('folder_name', '');",
 							"});"
 						],
 						"type": "text/javascript"
@@ -2101,9 +2105,9 @@
 					"script": {
 						"exec": [
 							"if(pm.iterationData.get(\"type\")=='aws-s3'){",
-							"   pm.globals.set('archiveClass', 'GLACIER');",
+							"   pm.environment.set('archiveClass', 'GLACIER');",
 							"} else if(pm.iterationData.get(\"type\")=='azure-blob' || pm.iterationData.get(\"type\")=='gcp-s3'){",
-							"    pm.globals.set('archiveClass', 'Archive');",
+							"    pm.environment.set('archiveClass', 'Archive');",
 							"} else{",
 							"    postman.setNextRequest(\"Delete Archived Object\")",
 							"}",
@@ -2150,7 +2154,7 @@
 				"body": {
 					"mode": "file",
 					"file": {
-						"src": "/home/root1/anvith_workspace/soda/postman/sample.pdf"
+						"src": "./sample.pdf"
 					}
 				},
 				"url": {
@@ -2364,12 +2368,12 @@
 							"        \"days\": 5,",
 							"        \"tier\": \"Expedited\"",
 							"    };",
-							"    pm.globals.set('iterationRequestBody', JSON.stringify(data));",
+							"    pm.environment.set('iterationRequestBody', JSON.stringify(data));",
 							"} else if(pm.iterationData.get(\"type\")=='azure-blob'){",
 							"    let data = {",
 							"        \"storageClass\": \"Hot\"",
 							"    };",
-							"    pm.globals.set('iterationRequestBody', JSON.stringify(data));",
+							"    pm.environment.set('iterationRequestBody', JSON.stringify(data));",
 							"}",
 							""
 						],
@@ -2513,7 +2517,7 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 204. Archvied Object is deleted successfully.\", function () { pm.response.to.have.status(204);});",
-							"pm.globals.unset('iterationRequestBody');"
+							"pm.environment.set('iterationRequestBody', '');"
 						],
 						"type": "text/javascript"
 					}
@@ -2602,9 +2606,10 @@
 						"exec": [
 							"pm.test(\"Status code is 204. Bucket delete successful.\", ",
 							"function () { ",
-							"    pm.globals.unset('bucket_name');",
+							"    pm.environment.set('bucket_name', '');",
 							"    pm.response.to.have.status(204); ",
-							"});"
+							"});",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -2661,16 +2666,16 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 200. Backend delete successfull.\", function () { ",
-							"    pm.globals.set('backend_id', '');",
-							"    pm.globals.set('backend_name', '');",
-							"    pm.globals.set('BACKEND_AWS', '');",
-							"    pm.globals.set('BACKEND_AZURE', '');",
-							"    pm.globals.set('BACKEND_GCP', '');",
-							"    pm.globals.set('BACKEND_HUAWEI', '');",
+							"    pm.environment.set('backend_id', '');",
+							"    pm.environment.set('backend_name', '');",
+							"    pm.environment.set('BACKEND_AWS', '');",
+							"    pm.environment.set('BACKEND_AZURE', '');",
+							"    pm.environment.set('BACKEND_GCP', '');",
+							"    pm.environment.set('BACKEND_HUAWEI', '');",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"if(pm.globals.get('invalid_backend_id')){",
-							"    pm.globals.set('invalid_backend_id', '');",
+							"if(pm.environment.get('invalid_backend_id')){",
+							"    pm.environment.set('invalid_backend_id', '');",
 							"    postman.setNextRequest('Register Backend');",
 							"}"
 						],
@@ -2681,9 +2686,9 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"let invalidBack = pm.globals.get('invalid_backend_id');",
+							"let invalidBack = pm.environment.get('invalid_backend_id');",
 							"if(invalidBack){",
-							"    pm.globals.set('backend_id', invalidBack);",
+							"    pm.environment.set('backend_id', invalidBack);",
 							"}"
 						],
 						"type": "text/javascript"
